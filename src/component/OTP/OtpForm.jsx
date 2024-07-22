@@ -28,6 +28,11 @@ function OTPForm() {
 
   };
   useEffect(() => {
+    // const qr = storageHelper.user.qrCode;
+    // console.log("user : ", storageHelper.user.qrCode);
+    // // console.log("user : ", storageHelper.user.qrCodeUri);
+    // console.log("QR  :", qr);
+    // setQrValue(qr)
     const qr = storageHelper.user.qrCodeUri;
     console.log("user : ", storageHelper.user.qrCodeUri);
     console.log("QR  :", qr);
@@ -42,23 +47,24 @@ function OTPForm() {
           <div className="p-6 space-y-4 items-center display-flex justify-center">
 
             <h1 className="block mb-2 text-sm font-medium text-blue-900 dark:text-white">
-              Scan The QR code to Genrate Token 
+              Scan The QR code to Genrate Token
             </h1>
-         
-             <div className="flex flex-col items-center justify-center">
-             <QRCode
+
+            <div className="flex flex-col items-center justify-center">
+              {/* <img src={qrValue} /> */}
+              <QRCode
                 size={256}
                 style={{ height: "auto", maxWidth: "25%", width: "25%" }}
                 value={qrValue}
                 viewBox={`0 0 256 256`}
               />
-             </div>
-          
+            </div>
+
           </div>
 
         }
         <div className="p-6 space-y-4">
-           
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="otp" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

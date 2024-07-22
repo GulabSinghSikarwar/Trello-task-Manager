@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import TaskForm from './TaskForm';
+
+import { CiEdit } from "react-icons/ci";
 import { ToastContainer, toast } from 'react-toastify';
-import { IoMdAdd } from "react-icons/io";
+import EditTaskForm from './EditTaskForm';
 
 
-const TaskCreationModal = () => {
+const TaskEditModal = ({ task }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleModal = (result) => {
@@ -22,14 +23,21 @@ const TaskCreationModal = () => {
 
     return (
         <>
-            <div className='container mx-auto p-4'>
-                <div className='p-2'>
-                    <button
+            <div className=''>
+                <div className='button-container '>
+                    {/* <button
+                        className=" text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                         onClick={toggleModal}
-                        className="flex items-center block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button"
                     >
-                        <IoMdAdd /><span className='px-2'>Create Task</span>
+                        <CiEdit size={25} /><span className='px-2'>Create Task</span>
+                    </button> */}
+                    <button
+                        onClick={toggleModal}
+                        className="common-button   text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                    ><CiEdit size={25} />
+                        <span className='px-2'
+                        >Edit </span>
                     </button>
                 </div>
             </div>
@@ -46,7 +54,7 @@ const TaskCreationModal = () => {
                     <div className="relative p-4 w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
-                            <TaskForm toggleModal={toggleModal} />
+                            <EditTaskForm toggleModal={toggleModal} task={task} />
                         </div>
                     </div>
 
@@ -56,4 +64,4 @@ const TaskCreationModal = () => {
     );
 };
 
-export default TaskCreationModal;
+export default TaskEditModal;

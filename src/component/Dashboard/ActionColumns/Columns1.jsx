@@ -16,15 +16,15 @@ function Columns1({ column, cards }) {
         <div className="w-full md:w-1/3 lg:w-1/3 p-2">
             <div className="column-header bg-pending p-4 text-white">Column 1 : {column.title}</div>
             {/* <h2 className="text-xl font-bold mb-4">{column.title}</h2> */}
-            <Droppable droppableId={column.id}>
+            <Droppable droppableId={column.columnId}>
                 {
                     (provided, snapshot) => (<div ref={provided.innerRef}
                         style={getListStyle(snapshot.isDraggingOver)}
                         {...provided.droppableProps}
-                        className="bg-gray-100 p-4 min-h-[200px]"
+                        className="bg-gray-100 column-body  p-4 min-h-[200px]"
                     >
                         {cards.map((card, index) => (
-                            <Card key={card.id} card={card} index={index} />
+                            <Card key={card._id} card={card} index={index} />
                         ))}
                         {
                             provided.placeholder

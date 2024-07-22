@@ -7,167 +7,130 @@ import Column2 from './ActionColumns/Column2';
 import Column3 from './ActionColumns/Column3';
 import TaskCreationModal from './Utils/CreateTasks';
 import SearchBar from './Utils/searchbar';
-import { fetchTaskStatus } from '../../service/task.service';
+import { fetchTaskStatus, updateTaskStatus } from '../../service/task.service';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { status } from '../utils/app.enum';
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { moveTask, setTasks } from '../../store/slices/tasks.slice'
 function Dashboard() {
-  const [state, setState] = useState([]);
+  const dispatch = useDispatch();
 
-  // const onDragEnd = (result) => {
-  //   console.log("Result : ", result);
-  //   /**
-  //      * {
-  //   "draggableId": "card-2",
-  //   "source": {
-  //   " droppableId": "column-1",
-  //     "index": 1
-  //   },
-  //   " destination": {
-  //   "droppableId": "column-2",
-  //     "index": 0
-  //   }
-  // }
+  const navigate = useNavigate();
+  const state = useSelector((state) => state.tasks);
 
-  //    */
+  const onDragEnd = async (result) => {
+    console.log("Result : ", result);
 
-  //   const { source, destination, draggableId } = result;
-  //   //  If no desitnation ,then do nothing  
-  //   if (!destination) {
-  //     return
-  //   }
+    const { source, destination, draggableId } = result;
+    //  If no destination, then do nothing  
+    dispatch(moveTask({ source, destination, draggableId }));
 
-  //   if (destination.droppableId == source.droppableId) {
-  //     // Dropeed Dropped in the same columns 
-  //     if (source.index == destination.index) {
-  //       // if position are same then do nothing 
-  //       return
-  //     }
-  //     // Now Extract the original Columns 
+    try {
+      const user = JSON.parse(localStorage.getItem('USER'));
+      const userId = user['_id']
+      const body = { status: destination.droppableId, userId, taskId: draggableId }
+      await updateTaskStatus(body);
+      toast.success("Task status updated successfully");
+    } catch (error) {
+      toast.error("Failed to update task status");
+    }
+  };
 
-  //     const startColumns = state.columns[source.droppableId]
-  //     const finishColumns = state.columns[source.droppableId];
-  //     if (startColumns == finishColumns) {
-  //       // create  a new modified cards columns 
-  //       const newCardIds = Array.from(startColumns.cardIds)
-  //       newCardIds.splice(source.index, 1)
-  //       newCardIds.splice(destination.index, 0, draggableId)
-
-  //       // Now lets create the new Columns 
-  //       const newColumns = {
-  //         ...startColumns,
-  //         cardIds: newCardIds
-  //       }
-
-  //       const newState = {
-  //         ...state,
-  //         columns: {
-  //           ...state.columns,
-  //           [source.droppableId]: newColumns
-  //         }
-  //       }
-
-  //       // Now Update the state 
-  //       setState(newState);
-
-
-  //     }
-
-  //   }
-  //   // LOGIC FOR SAME COUMNS END HERE 
-
-
-  //   // NOW lets Handle For Different Columns 
-  //   const startColumns = state.columns[source.droppableId];
-  //   const finishColumns = state.columns[destination.droppableId];
-
-  //   const newStartCardIds = Array.from(startColumns.cardIds);
-  //   const newFinishCardIds = Array.from(finishColumns.cardIds);
-
-  //   newStartCardIds.splice(source.index, 1);
-  //   newFinishCardIds.splice(destination.index, 0, draggableId)
-
-  //   const newStartColumn = {
-  //     ...startColumns,
-  //     cardIds: newStartCardIds
-  //   }
-
-  //   const newFinishColumns = {
-  //     ...finishColumns,
-  //     cardIds: newFinishCardIds
-  //   }
-
-  //   const newState = {
-  //     ...state,
-  //     columns: {
-  //       ...state.columns,
-  //       [newStartColumn.id]: newStartColumn,
-  //       [newFinishColumns.id]: newFinishColumns
-  //     }
-  //   }
-
-
-  //   setState(newState);
-
-  // }
-
-  const onDragEnd=()=>{
-    
-  }
   const getCards = (column) => {
-    console.log("column : ", column);
     const cardsInfo = []
-    column.cardIds.forEach((cardId) => {
-      const card = state.cards[cardId];
+    column.tasks.forEach((cardId) => {
+      const card = state.tasks[cardId];
       if (card) {
         cardsInfo.push(card);
       }
     })
-    console.log("CARDS : ", cardsInfo);
     return cardsInfo
   }
 
+  const checkLogin = () => {
+    if (localStorage.getItem('USER') == null) {
+      navigate('/login')
+      return false
+    } else {
+      return true;
+    }
+  }
 
   const fetchTaskStatusData = async () => {
-    const userId = localStorage.getItem('userId');
+    if (!checkLogin()) {
+      return
+    }
+    const user = JSON.parse(localStorage.getItem('USER'));
+    if (!user) {
+      return
+    }
+    const userId = user['_id']
     try {
-      const respone = await fetchTaskStatus(userId)
-      console.log("RESPONSE : ", respone)
-      if (respone.status == 200) {
-        toast.success("succfully fetched the Status")
+      const response = await fetchTaskStatus(userId)
+      formatInitialData(response)
+      if (response.status === 200) {
+        toast.success("Successfully fetched the Status")
       }
     } catch (error) {
       toast.error("Something Went Wrong")
     }
-
   }
-  useEffect(() => {
 
+  const formatInitialData = (response) => {
+    if (response && response.columns && !response.columns[status.Pending]) {
+      response.columns[status.Pending] = {
+        tasks: [],
+        columnId: status.Pending,
+        title: "To Do"
+      }
+    }
+
+    if (response && response.columns && !response.columns[status.Progress]) {
+      response.columns[status.Progress] = {
+        tasks: [],
+        columnId: status.Progress,
+        title: "In Progress"
+      }
+    }
+
+    if (response && response.columns && !response.columns[status.Completed]) {
+      response.columns[status.Completed] = {
+        tasks: [],
+        columnId: status.Completed,
+        title: "Done"
+      }
+    }
+    // console.log("rESP : ",response);
+    dispatch(setTasks(response))
+  }
+
+  useEffect(() => {
     fetchTaskStatusData()
   }, [])
 
   return (
     <>
-
       <TaskCreationModal />
       <SearchBar />
       <DragDropContext onDragEnd={onDragEnd} >
         <div className="container mx-auto p-4">
           <div className="flex flex-wrap lg:flex-nowrap">
-
-            <Columns1 column={state.columns['column-1']} cards={getCards(state.columns['column-1'])} />
-            <Column2 column={state.columns['column-2']} cards={getCards(state.columns['column-2'])} />
-            <Column3 column={state.columns['column-3']} cards={getCards(state.columns['column-3'])} />
-
+            {
+              state['tasks'] && <>
+                {state.columns[status.Pending] && <Columns1 column={state.columns[status.Pending]} cards={state.columns[status.Pending].tasks} />}
+                {state.columns[status.Progress] && <Column2 column={state.columns[status.Progress]} cards={state.columns[status.Progress].tasks} />}
+                {state.columns[status.Completed] && <Column3 column={state.columns[status.Completed]} cards={state.columns[status.Completed].tasks} />}
+              </>
+            }
           </div>
         </div>
       </DragDropContext>
       <ToastContainer
         position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}
         pauseOnFocusLoss draggable pauseOnHover theme="dark" />
-
     </>
   )
 }
-
 
 export default Dashboard

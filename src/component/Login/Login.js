@@ -34,6 +34,7 @@ function LoginForm({ onLogin }) {
         const { isFirstTimeLogin, is2FAEnabled, isTotpEnabled } = user
         storageHelper.token = token;
 
+
         toast.success("Successfully Logged In");
 
         handleLoginUtil(isFirstTimeLogin, is2FAEnabled, isTotpEnabled);
@@ -52,7 +53,8 @@ function LoginForm({ onLogin }) {
     } else {
       if (is2FAEnabled) {
 
-        navigate('/two-fa');
+        // navigate('/two-fa');
+        navigate('/');
       } else {
         navigate('/');
       }

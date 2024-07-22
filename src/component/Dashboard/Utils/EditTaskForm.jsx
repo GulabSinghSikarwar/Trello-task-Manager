@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { createTask } from '../../../service/task.service';
-import { ToastContainer, toast } from 'react-toastify';
-import { addTask } from '../../../store/slices/tasks.slice'
 import { useDispatch } from 'react-redux';
-import { addTaskAsync } from '../../../store/thunkStore/tasks.thunk'
-const TaskForm = ({ toggleModal }) => {
-  const dispatch = useDispatch()
+import { updateTaskAsync } from '../../../store/thunkStore/tasks.thunk';
+
+const EditTaskForm = ({ toggleModal, task }) => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     title: '',
     content: '',
     status: 'Pending',
     userId: '',
+    _id: ''
   });
+
+  useEffect(() => {
+    // Pre-fill the form with the existing task data
+    setFormData({
+      title: task.title,
+      content: task.content,
+      status: task.status,
+      userId: task.userId,
+      _id: task._id
+    });
+  }, [task]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -24,34 +34,25 @@ const TaskForm = ({ toggleModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+
     try {
-    
-      await dispatch(addTaskAsync(formData)).unwrap();
-      toggleModal({ success: true })  // Close the modal
-
+      await dispatch(updateTaskAsync(formData)).unwrap();
+      toggleModal({ success: true });  // Close the modal
     } catch (error) {
-      toggleModal({ error: true })  // Close the modal
-
-      console.error('Error creating task:', error);
+      toggleModal({ error: true });  // Close the modal
+      console.error('Error updating task:', error);
     }
   };
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('USER'));
-    setFormData(() => {
-      return { ...formData, userId: user['_id'] }
-    })
-  }, [])
 
   return (
     <div className="relative p-4 w-full max-w-md max-h-full">
       <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Create a new task
+            Edit Task
           </h3>
           <button
-            onClick={() => (toggleModal())}
+            onClick={() => toggleModal()}
             type="button"
             className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
           >
@@ -136,7 +137,6 @@ const TaskForm = ({ toggleModal }) => {
                 htmlFor="userId"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 aria-disabled
-
               >
                 Assignee (User ID)
               </label>
@@ -147,56 +147,22 @@ const TaskForm = ({ toggleModal }) => {
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Enter assignee's user ID"
-                required disabled
+                required
+                disabled
               />
             </div>
-
-            {/* <div>
-              <label
-                htmlFor="createdAt"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Created At
-              </label>
-              <input
-                type="datetime-local"
-                id="createdAt"
-                value={formData.createdAt}
-                onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                required
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="updatedAt"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Updated At
-              </label>
-              <input
-                type="datetime-local"
-                id="updatedAt"
-                value={formData.updatedAt}
-                onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                required
-              />
-            </div> */}
 
             <button
               type="submit"
               className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
             >
-              Create Task
+              Update Task
             </button>
           </form>
         </div>
       </div>
-
     </div>
   );
 };
 
-export default TaskForm;
+export default EditTaskForm;

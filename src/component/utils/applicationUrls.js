@@ -25,6 +25,12 @@ class ApplicationUrls {
     allTaskStatus(userId) {
         return url + '/task/' + userId
     }
+    updateTaskStatus(taskId) {
+        return url + '/task/' + taskId + '/status'
+    }
+    updateTask(taskId) {
+        return url + '/task/' + taskId
+    }
 
 
 }
