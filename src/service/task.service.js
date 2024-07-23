@@ -35,3 +35,16 @@ export const updateTask = async (body) => {
 
     }
 } 
+
+export const deleteTask =async(body)=>{
+    try {
+        console.log("DATA : ",body);
+        const url = applicationUrls.updateTask(body._id)
+        const response = await axios.delete(url, {
+            data:body
+        })
+        return response.data;
+    } catch (error) {
+
+    }
+}

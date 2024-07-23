@@ -14,6 +14,7 @@ const EditTaskForm = ({ toggleModal, task }) => {
   });
 
   useEffect(() => {
+    console.log(" EDIT TASK : ",task);
     // Pre-fill the form with the existing task data
     setFormData({
       title: task.title,

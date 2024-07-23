@@ -38,9 +38,16 @@ const tasksSlice = createSlice({
       }
     },
     deleteTask: (state, action) => {
-      const { columnId, taskId } = action.payload;
-      state.tasks = state.tasks.filter(task => task.id !== taskId);
-      state.columns[columnId].tasks = state.columns[columnId].tasks.filter(id => id !== taskId);
+      const {task}= action.payload;
+      const tasks =state.tasks;
+      delete state.tasks[task._id]
+      if (!state.columns[task.status]) {
+        state.columns[task.status] = { tasks: [], columnId: task.status, title: task.status };
+      }
+
+      const index = state.columns[task.status].tasks.findIndex((element) => element._id === task._id)
+      state.columns[task.status].tasks.splice(index, 1);
+
     },
     moveTask: (state, action) => {
       const { source, destination, draggableId } = action.payload;
@@ -57,6 +64,12 @@ const tasksSlice = createSlice({
         const startColumn = state.columns[source.droppableId];
         const newTaskIds = Array.from(startColumn.tasks);
         newTaskIds.splice(source.index, 1);
+        console.log("..........................");
+        console.log("Drop ID ->" ,destination.droppableId );
+        console.log("...Initial Task .............",startColumn.tasks[source.index]);
+        startColumn.tasks[source.index].status=destination.droppableId
+        console.log("......After updation..........",startColumn.tasks[source.index]);
+        console.log("................................");
         newTaskIds.splice(destination.index, 0, startColumn.tasks[source.index]);
 
         const newColumn = {
@@ -81,6 +94,7 @@ const tasksSlice = createSlice({
 
         const startTaskIds = Array.from(startColumn.tasks);
         const [movedTask] = startTaskIds.splice(source.index, 1);
+        movedTask.status=destination.droppableId
         const finishTaskIds = Array.from(finishColumn.tasks);
         finishTaskIds.splice(destination.index, 0, movedTask);
 
@@ -137,7 +151,7 @@ const tasksSlice = createSlice({
         if (!state.columns[task.status]) {
           state.columns[task.status] = { tasks: [], columnId: task.status, title: task.status };
         }
-
+        
         // Add the task to the corresponding column's tasks array
         state.columns[task.status].tasks.push(task);
       })
@@ -150,21 +164,18 @@ const tasksSlice = createSlice({
       })
       .addCase(updateTaskAsync.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        const updatedTask = action.payload.data;
-        state.tasks[updatedTask._id] = updatedTask;
-console.log("data : ",action.payload);
-        // Update the columns if the status has changed
-        Object.keys(state.columns).forEach((columnId) => {
-          const column = state.columns[columnId];
-          const taskIndex = column.tasks.indexOf(updatedTask._id);
-          if (taskIndex > -1) {
-            column.tasks.splice(taskIndex, 1);
-          }
-        });
+        const updatedTask = action.payload;
+        state.tasks[updateTask._id] = updateTask
         if (!state.columns[updatedTask.status]) {
           state.columns[updatedTask.status] = { tasks: [], columnId: updatedTask.status, title: updatedTask.status };
         }
-        state.columns[updatedTask.status].tasks.push(updatedTask);
+
+
+        const index = state.columns[updatedTask.status].tasks.findIndex((task) => task._id === updatedTask._id)
+        state.columns[updatedTask.status].tasks.splice(index, 1);
+        state.columns[updatedTask.status].tasks.splice(index, 0, updatedTask);
+
+
       })
       .addCase(updateTaskAsync.rejected, (state, action) => {
         state.status = 'failed';

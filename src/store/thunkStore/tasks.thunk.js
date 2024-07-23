@@ -24,7 +24,7 @@ export const updateTaskAsync = createAsyncThunk(
     try {
       const response = await updateTask(taskData);
       console.log("RESP : ",response);
-      return response; // Assuming the updated task data is returned in response.data
+      return response.data; // Assuming the updated task data is returned in response.data
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
