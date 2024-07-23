@@ -1,8 +1,6 @@
 import { url } from "./constant";
 
 class ApplicationUrls {
-
-    hostedZoneUrl = url + '/hosted-zones'
     authUrl = url + '/auth'
 
     get loginUrl() {
@@ -17,8 +15,21 @@ class ApplicationUrls {
         return this.authUrl + '/validateToken'
     }
 
-    get verifyTotp(){
-        return this.authUrl+'/verify-totp'
+    get verifyTotp() {
+        return this.authUrl + '/verify-totp'
+    }
+
+    get createTask() {
+        return url + '/task'
+    }
+    allTaskStatus(userId) {
+        return url + '/task/' + userId
+    }
+    updateTaskStatus(taskId) {
+        return url + '/task/' + taskId + '/status'
+    }
+    updateTask(taskId) {
+        return url + '/task/' + taskId
     }
 
 
