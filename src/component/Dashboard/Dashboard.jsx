@@ -13,8 +13,10 @@ import { status } from '../utils/app.enum';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { moveTask, setTasks } from '../../store/slices/tasks.slice'
+import axios from 'axios';
 function Dashboard() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); const [user, setUser] = useState(null);
+
 
   const navigate = useNavigate();
   const state = useSelector((state) => state.tasks);
@@ -70,7 +72,7 @@ function Dashboard() {
       const response = await fetchTaskStatus(userId)
       formatInitialData(response)
       if (response.status === 200) {
-        toast.success("Successfully fetched the Status", )
+        toast.success("Successfully fetched the Status",)
       }
     } catch (error) {
       toast.error("Something Went Wrong")
@@ -104,9 +106,22 @@ function Dashboard() {
     // console.log("rESP : ",response);
     dispatch(setTasks(response))
   }
+  const getUser = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
+      const { data } = await axios.get(url, { withCredentials: true });
+      setUser(data.user._json);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
 
   useEffect(() => {
+    getUser();
     fetchTaskStatusData()
+
   }, [])
 
   return (
