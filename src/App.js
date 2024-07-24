@@ -75,7 +75,7 @@ function App() {
     if (token) {
       navigate('/home');
     } else {
-      navigate('/login');
+      // navigate('/login');
     }
   }, [location.pathname]);
 

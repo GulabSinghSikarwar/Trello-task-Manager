@@ -10,6 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { deleteTask } from "../../service/task.service";
 import { deleteTask as deleteTaskAction } from '../../store/slices/tasks.slice'
 import { useDispatch } from "react-redux";
+import MoreIcon from '../../icons/moreIcon.svg'
+import ButtonOptions from "./Utils/ButtonOptions";
 const Card = ({ card, index, onDeleteCard, onEditCard }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -90,10 +92,24 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
             )}
             className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
           >
-            <div className="flex flex-col items-center pb-10 px-5" >
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-                {card.title}
-              </h5>
+            <div className="flex flex-col w-auto  pb-10 px-2 text-left" >
+              <div className="flex justify-between items-center w-full  pr-2">
+                <h5 className="mb-1   text-[14px]  font-medium dark:text-white capitalize bg-titleBlueBg rounded-full px-4 py-2  text-pendingBlueText ">
+                  {card.title}
+                </h5>
+                <div>
+                  <ButtonOptions button={MoreIcon} />
+                </div>
+              </div>
+
+              <div>
+                <p className="text-[14px]  font-medium dark:">
+                  {
+                    card.content
+                  }
+                </p>
+              </div>
+
               <div className="button-container flex mt-4 space-x-2">
                 <TaskEditModal task={card} isOpen={isOpen} toggleModal={toggleModal} />
 
@@ -111,7 +127,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
                   <CiEdit size={20} /><span className='px-2'>Edit </span>
                 </button>
               </div>
-            </div> 
+            </div>
             <ToastContainer containerId={"TaskCard"}
               position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}
               pauseOnFocusLoss draggable pauseOnHover theme="dark" />
