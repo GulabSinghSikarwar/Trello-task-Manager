@@ -11,8 +11,8 @@ function Column2({ column, cards }) {
   });
 
   useEffect(() => {
-    console.log("col id : ", column.columnId);
-    console.log("Received: ", column, "CARDS: ", cards);
+    //console.log("col id : ", column.columnId);
+    //console.log("Received: ", column, "CARDS: ", cards);
   }, [column, cards]);
 
   return (

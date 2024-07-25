@@ -15,21 +15,21 @@ function App() {
   const [googleAuth, setGoogleAuth] = useState(null)
 
   const checkLoginStatus = async () => {
-    console.log("Checking login status...");
+    //console.log("Checking login status...");
     try {
       const response = await fetch(`${API_URL}/auth/login/success`);
-      console.log("Response from login status:", response);
+      //console.log("Response from login status:", response);
       if (response.ok) {
         const data = await response.json();
-        console.log("Data from login status:", data);
+        //console.log("Data from login status:", data);
         toast.success("Successfully Logged In, Moving To Dashboard!");
         storageHelper.user = data.user;
         navigate('/home'); // Changed to /home for consistency
       } else {
-        console.error('Login status check failed');
+        //console.error('Login status check failed');
       }
     } catch (error) {
-      console.error('Failed to check login status', error);
+      //console.error('Failed to check login status', error);
     }
   };
 
@@ -42,9 +42,9 @@ function App() {
     const user = urlParams.get('user');
 
     if (token && user) {
-      console.log('Token and user found in URL params');
-      console.log('Token:', token);
-      console.log('User:', user);
+      //console.log('Token and user found in URL params');
+      //console.log('Token:', token);
+      //console.log('User:', user);
 
       // Store user and token in local storage or context
       localStorage.setItem('token', token);
@@ -53,7 +53,7 @@ function App() {
       toast.success('Successfully Logged In, Moving To Dashboard!');
       navigate('/home');
     } else {
-      console.log('No token or user in URL params');
+      //console.log('No token or user in URL params');
       // Handle cases where there is no token or user in URL
       // For example, navigate to login page or show an error
       navigate('/login');
@@ -62,20 +62,20 @@ function App() {
 
   
   useEffect(() => {
-    console.log("Initial navigation to /home");
+    //console.log("Initial navigation to /home");
     navigate('/home');
   }, []);
 
   useEffect(() => {
-    console.log("Location changed:", location.pathname);
+    //console.log("Location changed:", location.pathname);
     setCount((prevCount) => prevCount + 1);
 
     const token = localStorage.getItem('token');
-    console.log("Token from local storage:", token);
+    //console.log("Token from local storage:", token);
     if (token) {
       navigate('/home');
     } else {
-      navigate('/login');
+      // navigate('/login');
     }
   }, [location.pathname]);
 
