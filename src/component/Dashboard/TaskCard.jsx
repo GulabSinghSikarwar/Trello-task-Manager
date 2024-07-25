@@ -4,7 +4,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import TaskEditModal from './Utils/EditTask.Modal';
 import React, { useState, useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-
+import { FaRegCommentDots } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 import { ToastContainer, toast } from 'react-toastify';
 import { deleteTask } from "../../service/task.service";
@@ -13,6 +13,9 @@ import { useDispatch } from "react-redux";
 import MoreIcon from '../../icons/moreIcon.svg'
 import ButtonOptions from "./Utils/ButtonOptions";
 import TaskDetails from "./Task/TaskDetails";
+import './Task/task.css'
+import { storageHelper } from "../utils/storage";
+
 const Card = ({ card, index, onDeleteCard, onEditCard }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showTaskDetails, setShowTaskDetails] = useState(false)
@@ -21,6 +24,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
   const dispatch = useDispatch()
 
   const [taskAction, setTaskActions] = useState([])
+  const [avtarInitials, setAvtarInitials] = useState('')
 
   const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
@@ -77,9 +81,23 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
     }
     setIsOpen(!isOpen);
   };
-
+  function generateInitials(name) {
+    const names = name.split(' ');
+    const initials = names.map(n => n[0].toUpperCase()).join('');
+    return initials;
+  }
   React.useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
+
+
+    // Setting Avatar Initials
+    let user = storageHelper.get('USER')
+
+    console.log("USER : ", user);
+    if (user.username) {
+      const initials = generateInitials(user.username)
+      setAvtarInitials(initials)
+    }
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -118,7 +136,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
               snapshot.isDragging,
               provided.draggableProps.style
             )}
-            className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-700"
           >
             <div className="flex flex-col w-auto  pb-10 px-2 text-left" >
               <div className="flex justify-between items-center w-full  pr-2">
@@ -126,11 +144,11 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
                   {card.title}
                 </h5>
                 <div className="button-container flex mt-4 space-x-2">
-                <TaskEditModal task={card} isOpen={isOpen} toggleModal={toggleModal} />
+                  <TaskEditModal task={card} isOpen={isOpen} toggleModal={toggleModal} />
 
 
-                
-              </div>
+
+                </div>
                 <div>
                   {
                     taskAction.length && <ButtonOptions button={MoreIcon} options={taskAction} />
@@ -139,13 +157,24 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
               </div>
 
               <div>
-                <p className="text-[14px]  font-medium dark:">
+                <p className="text-[14px]  px-2 font-medium dark:">
                   {
                     card.content
                   }
                 </p>
               </div>
+
+              <div className="flex justify-between items-center py-2">
+                {avtarInitials && <div class="avatar" id="avatar">
+                  <span class="initials" id="initials">{avtarInitials}</span>
+                </div>}
+                <div>
+                 <span> <img src="" alt="" /> </span> <FaRegCommentDots color="#7E7B85" size={25} />
+                </div>
+
+              </div>
             </div>
+
             <ToastContainer containerId={"TaskCard"}
               position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}
               pauseOnFocusLoss draggable pauseOnHover theme="dark" />

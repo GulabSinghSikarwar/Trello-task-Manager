@@ -2,20 +2,23 @@ import React, { useEffect } from 'react'
 import { Droppable } from 'react-beautiful-dnd';
 import Card from '../TaskCard';
 import './columns.css'
+import { FaPlus } from "react-icons/fa";
+import TaskCreationModal from '../Utils/CreateTasks';
 
 function Columns1({ column, cards }) {
-    const getListStyle = isDraggingOver => ({
-        background: isDraggingOver ? "lightblue" : "#d9dbf1",
-        width: "100%"
+  const getListStyle = isDraggingOver => ({
+    background: isDraggingOver ? "lightblue" : "",
+    width: "100%"
 
-    });
-    useEffect(() => {
-        //console.log("Recvied : ", column, "CARDS : ", cards);
-    }, [])
-    return (
-        <div className="w-full md:w-1/3 lg:w-1/3 p-2">
-      <div className="column-header bg-inProcessHeading text-white p-4">
-        Column 1: {column.title}
+  });
+  useEffect(() => {
+    //console.log("Recvied : ", column, "CARDS : ", cards);
+  }, [])
+  return (
+    <div className="w-full md:w-1/4 lg:w-1/4 p-2">
+      <div className=" flex justify-between text-columnHeadingColor p-4 items-center ">
+        <div> {column.title}</div>
+        <TaskCreationModal />
       </div>
       <Droppable droppableId={column.columnId}>
         {(provided, snapshot) => (
@@ -23,7 +26,7 @@ function Columns1({ column, cards }) {
             ref={provided.innerRef}
             style={getListStyle(snapshot.isDraggingOver)}
             {...provided.droppableProps}
-            className="bg-statusBg column-body p-4 min-h-[200px]"
+            className=" column-body "
           >
             {cards && cards.length ? (
               cards.map((card, index) => (
@@ -37,7 +40,7 @@ function Columns1({ column, cards }) {
         )}
       </Droppable>
     </div>
-    )
+  )
 }
 
 export default Columns1
