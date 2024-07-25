@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TaskForm from './TaskForm';
 import { ToastContainer, toast } from 'react-toastify';
 import { IoMdAdd } from "react-icons/io";
-
+import { FaPlus } from "react-icons/fa";
 
 const TaskCreationModal = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +11,10 @@ const TaskCreationModal = () => {
         if (result) {
 
             if (result.success) {
-                toast.success("Created A Task !!",{containerId:'Dashboard'})
+                toast.success("Created A Task !!", { containerId: 'Dashboard' })
             }
             if (result.error) {
-                toast.error("Something Went Wrong",{containerId:'Dashboard'})
+                toast.error("Something Went Wrong", { containerId: 'Dashboard' })
             }
         }
         setIsOpen(!isOpen);
@@ -22,18 +22,8 @@ const TaskCreationModal = () => {
 
     return (
         <>
-            <div className='container mx-auto p-4'>
-                <div className='p-2'>
-                    <button
-                        onClick={toggleModal}
-                        className="flex items-center block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        type="button"
-                    >
-                        <IoMdAdd /><span className='px-2'>Create Task</span>
-                    </button>
-                </div>
-            </div>
-         
+            <div className='bg-addTaskPlusBg  rounded-full  p-2' onClick={toggleModal}> <FaPlus /></div>
+
             {isOpen && (
                 <div
                     id="task-creation-modal"

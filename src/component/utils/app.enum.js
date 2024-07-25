@@ -8,3 +8,13 @@ export const statusName = {
     Progress: "Progress",
     Completed: "Completed"
 }
+export const Priority = {
+    CRITICAL: 'Critical',
+    HIGH: 'High',
+    MEDIUM: 'Medium',
+    LOW: 'Low',
+    TRIVIAL: 'Trivial'
+};
+export const statusColor = {
+
+}
