@@ -2,7 +2,7 @@
 // src/components/Card.js
 import { MdDeleteOutline } from "react-icons/md";
 import TaskEditModal from './Utils/EditTask.Modal';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
 import { CiEdit } from "react-icons/ci";
@@ -12,11 +12,15 @@ import { deleteTask as deleteTaskAction } from '../../store/slices/tasks.slice'
 import { useDispatch } from "react-redux";
 import MoreIcon from '../../icons/moreIcon.svg'
 import ButtonOptions from "./Utils/ButtonOptions";
+import TaskDetails from "./Task/TaskDetails";
 const Card = ({ card, index, onDeleteCard, onEditCard }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showTaskDetails, setShowTaskDetails] = useState(false)
   const dropdownRef = useRef(null);
 
   const dispatch = useDispatch()
+
+  const [taskAction, setTaskActions] = useState([])
 
   const getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
@@ -54,16 +58,21 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
     onEditCard(card.id);
     setIsDropdownOpen(false); // Close dropdown after action
   };
+
+  const toggleTaskDetailsModal = () => {
+    setShowTaskDetails(!showTaskDetails);
+  };
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = (result) => {
     if (result) {
 
       if (result.success) {
-        toast.success(" Task Updated  !!")
+        toast.success(" Task Updated  !!", { containerId: 'TaskCard' })
       }
       if (result.error) {
-        toast.error("Something Went Wrong")
+        toast.error("Something Went Wrong", { containerId: 'TaskCard' })
       }
     }
     setIsOpen(!isOpen);
@@ -75,6 +84,25 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const actions = [
+      {
+        label: "Edit",
+        action: toggleModal,
+      },
+      {
+        label: "Delete",
+        action: deleteCard
+      },
+      {
+        label: "View Details",
+        action: toggleTaskDetailsModal
+      }
+    ]
+    console.log("action : ", actions);
+    setTaskActions(actions)
+  }, [])
 
 
 
@@ -97,8 +125,16 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
                 <h5 className="mb-1   text-[14px]  font-medium dark:text-white capitalize bg-titleBlueBg rounded-full px-4 py-2  text-pendingBlueText ">
                   {card.title}
                 </h5>
+                <div className="button-container flex mt-4 space-x-2">
+                <TaskEditModal task={card} isOpen={isOpen} toggleModal={toggleModal} />
+
+
+                
+              </div>
                 <div>
-                  <ButtonOptions button={MoreIcon} />
+                  {
+                    taskAction.length && <ButtonOptions button={MoreIcon} options={taskAction} />
+                  }
                 </div>
               </div>
 
@@ -109,24 +145,6 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
                   }
                 </p>
               </div>
-
-              <div className="button-container flex mt-4 space-x-2">
-                <TaskEditModal task={card} isOpen={isOpen} toggleModal={toggleModal} />
-
-
-                <button
-                  className="common-button w-full-sm text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800"
-                  onClick={deleteCard}
-                >
-                  <MdDeleteOutline size={20} /> <span className='px-2'>Delete</span>
-                </button>
-                <button
-                  className="common-button w-full-sm text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-                  onClick={toggleModal}
-                >
-                  <CiEdit size={20} /><span className='px-2'>Edit </span>
-                </button>
-              </div>
             </div>
             <ToastContainer containerId={"TaskCard"}
               position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}
@@ -134,6 +152,8 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
           </div>
         )}
       </Draggable>
+
+      <TaskDetails isVisible={showTaskDetails} toggleModal={toggleTaskDetailsModal} details={card} />
     </>
   );
 };

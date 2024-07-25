@@ -10,7 +10,7 @@ function Columns1({ column, cards }) {
 
     });
     useEffect(() => {
-        console.log("Recvied : ", column, "CARDS : ", cards);
+        //console.log("Recvied : ", column, "CARDS : ", cards);
     }, [])
     return (
         <div className="w-full md:w-1/3 lg:w-1/3 p-2">

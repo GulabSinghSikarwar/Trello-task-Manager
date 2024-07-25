@@ -11,10 +11,10 @@ const TaskCreationModal = () => {
         if (result) {
 
             if (result.success) {
-                toast.success("Created A Task !!")
+                toast.success("Created A Task !!",{containerId:'Dashboard'})
             }
             if (result.error) {
-                toast.error("Something Went Wrong")
+                toast.error("Something Went Wrong",{containerId:'Dashboard'})
             }
         }
         setIsOpen(!isOpen);

@@ -22,7 +22,7 @@ function Dashboard() {
   const state = useSelector((state) => state.tasks);
 
   const onDragEnd = async (result) => {
-    console.log("Result : ", result);
+    //console.log("Result : ", result);
 
     const { source, destination, draggableId } = result;
     //  If no destination, then do nothing  
@@ -33,9 +33,11 @@ function Dashboard() {
       const userId = user['_id']
       const body = { status: destination.droppableId, userId, taskId: draggableId }
       await updateTaskStatus(body);
-      toast.success("Task status updated successfully");
+      toast.success("Task status updated successfully", {
+        containerId: 'Dashboard'
+      });
     } catch (error) {
-      toast.error("Failed to update task status");
+      toast.error("Failed to update task status",{ containerId: 'Dashboard' });
     }
   };
 
@@ -103,16 +105,16 @@ function Dashboard() {
         title: "Done"
       }
     }
-    // console.log("rESP : ",response);
+    // //console.log("rESP : ",response);
     dispatch(setTasks(response))
   }
   const getUser = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
-      const { data } = await axios.get(url, { withCredentials: true });
-      setUser(data.user._json);
+      // const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
+      // const { data } = await axios.get(url, { withCredentials: true });
+      // setUser(data.user._json);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
 

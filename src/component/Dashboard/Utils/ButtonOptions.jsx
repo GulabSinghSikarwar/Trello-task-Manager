@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ButtonOptions({ button }) {
+function ButtonOptions({ button, options }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleDropdownClick = () => {
@@ -22,12 +22,13 @@ function ButtonOptions({ button }) {
         return () => {
             document.removeEventListener('click', handleOutsideClick);
         };
+        console.log("action options : ", options);
     }, []);
     return (
         <div style={{ position: 'relative' }} className='dropdown-pad'>
             <img src={button} alt="" srcset="" id="dropdownDividerButton"
                 onClick={handleDropdownClick}
-                className="text-white    px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 "
+                className="text-white  text-center inline-flex items-center dark:bg-blue-600 "
                 type="button" />
             <div
                 id="dropdownDivider"
@@ -35,19 +36,15 @@ function ButtonOptions({ button }) {
                 style={{ minWidth: 200 }}
             >
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
-                    <li>
-                        <a href="#" onClick={handleOptionClick} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="#" onClick={handleOptionClick} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                    </li>
-                    <li>
-                        <a href="#" onClick={handleOptionClick} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                    </li>
+                    {
+                        options.map((option, index) => {
+                            return <li>
+                                <a href="#" key={index} onClick={option.action} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{option.label}</a>
+                            </li>
+                        })
+                    }
                 </ul>
-                <div className="py-2">
-                    <a href="#" onClick={handleOptionClick} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Separated link</a>
-                </div>
+                 
             </div>
         </div>
     )
