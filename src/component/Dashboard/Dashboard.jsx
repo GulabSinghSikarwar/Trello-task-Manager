@@ -37,7 +37,7 @@ function Dashboard() {
         containerId: 'Dashboard'
       });
     } catch (error) {
-      toast.error("Failed to update task status",{ containerId: 'Dashboard' });
+      toast.error("Failed to update task status", { containerId: 'Dashboard' });
     }
   };
 
@@ -128,21 +128,25 @@ function Dashboard() {
 
   return (
     <>
-      <TaskCreationModal />
+      {/* <TaskCreationModal /> */}
       <SearchBar />
-      <DragDropContext onDragEnd={onDragEnd} >
-        <div className="container mx-auto p-4">
-          <div className="flex flex-wrap lg:flex-nowrap">
-            {
-              state['tasks'] && <>
-                {state.columns[status.Pending] && <Columns1 column={state.columns[status.Pending]} cards={state.columns[status.Pending].tasks} />}
-                {state.columns[status.Progress] && <Column2 column={state.columns[status.Progress]} cards={state.columns[status.Progress].tasks} />}
-                {state.columns[status.Completed] && <Column3 column={state.columns[status.Completed]} cards={state.columns[status.Completed].tasks} />}
-              </>
-            }
+      <div className='bg-white rounded-lg shadow dark:bg-dashboardBg mx-5 min-h-[77vh]'>
+
+        <DragDropContext onDragEnd={onDragEnd} >
+          <div className="container mx-auto p-4">
+            <div className="flex flex-wrap lg:flex-nowrap justify-between">
+              {
+                state['tasks'] && <>
+                  {state.columns[status.Pending] && <Columns1 column={state.columns[status.Pending]} cards={state.columns[status.Pending].tasks} />}
+                  {state.columns[status.Progress] && <Column2 column={state.columns[status.Progress]} cards={state.columns[status.Progress].tasks} />}
+                  {state.columns[status.Completed] && <Column3 column={state.columns[status.Completed]} cards={state.columns[status.Completed].tasks} />}
+                </>
+              }
+            </div>
           </div>
-        </div>
-      </DragDropContext>
+        </DragDropContext>
+      </div>
+
       <ToastContainer containerId={"Dashboard"}
         position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}
         pauseOnFocusLoss draggable pauseOnHover theme="dark" />

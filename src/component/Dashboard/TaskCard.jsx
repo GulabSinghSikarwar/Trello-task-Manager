@@ -118,7 +118,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
               snapshot.isDragging,
               provided.draggableProps.style
             )}
-            className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-700"
           >
             <div className="flex flex-col w-auto  pb-10 px-2 text-left" >
               <div className="flex justify-between items-center w-full  pr-2">
@@ -139,7 +139,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
               </div>
 
               <div>
-                <p className="text-[14px]  font-medium dark:">
+                <p className="text-[14px]  px-2 font-medium dark:">
                   {
                     card.content
                   }
