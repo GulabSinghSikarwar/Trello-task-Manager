@@ -60,12 +60,6 @@ function App() {
     }
   }, []);
 
-  
-  useEffect(() => {
-    //console.log("Initial navigation to /home");
-    navigate('/home');
-  }, []);
-
   useEffect(() => {
     //console.log("Location changed:", location.pathname);
     setCount((prevCount) => prevCount + 1);
@@ -75,7 +69,7 @@ function App() {
     if (token) {
       navigate('/home');
     } else {
-      // navigate('/login');
+      navigate('/login');
     }
   }, [location.pathname]);
 
