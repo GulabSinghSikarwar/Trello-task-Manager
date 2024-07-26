@@ -139,7 +139,7 @@ function Dashboard() {
           <div className="container mx-auto p-4">
             <div className="flex flex-wrap lg:flex-nowrap justify-between">
               {
-                state['tasks'] && <>
+                state &&  state['tasks'] && <>
                   {state.columns[status.Pending] && <Columns1 column={state.columns[status.Pending]} cards={state.columns[status.Pending].tasks} />}
                   {state.columns[status.Progress] && <Column2 column={state.columns[status.Progress]} cards={state.columns[status.Progress].tasks} />}
                   {state.columns[status.Completed] && <Column3 column={state.columns[status.Completed]} cards={state.columns[status.Completed].tasks} />}
