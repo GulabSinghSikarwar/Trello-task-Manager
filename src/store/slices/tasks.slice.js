@@ -86,7 +86,7 @@ const tasksSlice = createSlice({
         };
 
         state.tasks = newState.tasks
-        state.columns = newColumn.columns
+        state.columns = newState.columns
       } else {
         // Handle dragging between different columns
         const startColumn = state.columns[source.droppableId];
