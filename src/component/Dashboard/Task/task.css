@@ -1,7 +1,7 @@
 .avatar {
-    width: 25px;
+    width: 20px;
     /* Adjust size as needed */
-    height: 25px;
+    height: 20px;
     /* Adjust size as needed */
     background-color: #007bff;
     /* Background color */
@@ -12,7 +12,7 @@
     justify-content: center;
     border-radius: 50%;
     /* Makes the element circular */
-    font-size: 13px;
+    font-size: 11px;
     /* Adjust font size as needed */
     font-weight: bold;
     /* Make initials stand out */

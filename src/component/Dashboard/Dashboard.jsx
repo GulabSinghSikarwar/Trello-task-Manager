@@ -63,9 +63,11 @@ function Dashboard() {
 
   const fetchTaskStatusData = async () => {
     if (!checkLogin()) {
+      console.log("here");
       navigate('/login')
-      return
+      
     }
+    console.log("WHY ");
     const user = JSON.parse(localStorage.getItem('USER'));
     if (!user) {
       return

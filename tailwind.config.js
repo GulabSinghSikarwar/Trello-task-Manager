@@ -15,6 +15,7 @@ module.exports = {
         'pendingBlueText': '#1865FF',
         'addTaskPlusBg': '#F2F6FE',
         'columnHeadingColor': '#615D69',
+        'commentIconColor': '#7E7B85',
 
       }
     },

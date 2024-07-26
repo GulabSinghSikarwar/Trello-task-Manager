@@ -93,13 +93,12 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
     // Setting Avatar Initials
     let user = storageHelper.get('USER')
 
-    console.log("USER : ", user);
     if (user.username) {
       const initials = generateInitials(user.username)
       setAvtarInitials(initials)
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside); 
     };
   }, []);
 
@@ -118,7 +117,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
         action: toggleTaskDetailsModal
       }
     ]
-    console.log("action : ", actions);
+    
     setTaskActions(actions)
   }, [])
 
@@ -138,7 +137,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
             )}
             className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-700"
           >
-            <div className="flex flex-col w-auto  pb-10 px-2 text-left" >
+            <div className="flex flex-col w-auto  px-2 text-left" >
               <div className="flex justify-between items-center w-full  pr-2">
                 <h5 className="mb-1   text-[14px]  font-medium dark:text-white capitalize bg-titleBlueBg rounded-full px-4 py-2  text-pendingBlueText ">
                   {card.title}
@@ -156,20 +155,20 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
                 </div>
               </div>
 
-              <div>
-                <p className="text-[14px]  px-2 font-medium dark:">
+              <div className="pt-4">
+                <p className="text-[12px] font-light  ">
                   {
                     card.content
                   }
                 </p>
               </div>
 
-              <div className="flex justify-between items-center py-2">
+              <div className="flex justify-between items-center py-2 pt-5">
                 {avtarInitials && <div class="avatar" id="avatar">
                   <span class="initials" id="initials">{avtarInitials}</span>
                 </div>}
-                <div>
-                 <span> <img src="" alt="" /> </span> <FaRegCommentDots color="#7E7B85" size={25} />
+                <div style={{ fontWeight: 'lighter' }} className="flex items-center ">
+                  <span> <img src="" alt="" /> </span> <FaRegCommentDots color="#7E7B85" size={15} fontWeight='300' /> <span className="text-commentIconColor text-[12px] px-1" >   {card.comments.length} </span>
                 </div>
 
               </div>

@@ -23,7 +23,8 @@ function Header() {
         localStorage.clear();
         setIsLoggedIn(false);
         // Redirect to home or login page
-        navigate('/');
+        console.log("navigating : ",);
+        navigate('/login');
     };
 
     return (
