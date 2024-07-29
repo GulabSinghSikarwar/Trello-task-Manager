@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import TaskStatusPanel from './TaskComponents/TaskStatusPanel';
+import CommentBox from './TaskComponents/CommentBox';
 function TaskDetails({ isVisible, toggleModal, details }) {
 
     return (
@@ -59,6 +60,7 @@ function TaskDetails({ isVisible, toggleModal, details }) {
                                     The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
                                 </p> */}
                             </div>
+                            <CommentBox />
                             {/* Modal footer */}
                             <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                 <button

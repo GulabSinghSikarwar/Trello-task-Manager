@@ -9,6 +9,8 @@ import { ReactComponent as AssigneIcon } from '../../../../icons/clickup_icons/a
 import { ReactComponent as PriorityFlag } from '../../../../icons/clickup_icons/flag.svg'
 import { storageHelper } from '../../../utils/storage'
 import '../task.css'
+import { PriorityIcon } from '../../../utils/utils'
+import Tooltip from './ToolTip'
 function TaskStatusPanel({ task }) {
     const [avtarInitials, setAvtarInitials] = useState('')
     function generateInitials(name) {
@@ -16,8 +18,9 @@ function TaskStatusPanel({ task }) {
         const initials = names.map(n => n[0].toUpperCase()).join('');
         return initials;
     }
+    const priorityIcon = PriorityIcon(task.priority)
     React.useEffect(() => {
- 
+
         // Setting Avatar Initials
         let user = storageHelper.get('USER')
 
@@ -25,7 +28,7 @@ function TaskStatusPanel({ task }) {
             const initials = generateInitials(user.username)
             setAvtarInitials(initials)
         }
-         
+
     }, []);
 
 
@@ -68,11 +71,23 @@ function TaskStatusPanel({ task }) {
                         <span class="initials" id="initials">{avtarInitials}</span>
                     </div>}</div>
                 </div>
-                <div className="flex py-2 px">
+                <div className="flex py-2 px item-center">
                     <div className="w-1/2  text-[13px]  text-commentIconColor flex  items-center">
-                        <span className='mr-2'> <PriorityFlag /> </span> <span className='capitalize'>status</span>
+                        <span className='mr-2'> <PriorityFlag /> </span> <span className='capitalize'>Priority</span>
                     </div>
-                    <div className="w-1/2 text-[13px] text-commentIconColor">{(task.status) ? task.status : 'Empty'}</div>
+                    <div className="w-1/2 text-[13px] text-commentIconColor relative inline-block ">
+                        <Tooltip message={task.priority}>
+                            {/* <button
+                                type="button"
+                                className="inline-flex items-center rounded-lg border border-gray-500 p-3 text-center
+                                  text-sm font-medium text-zinc-800
+                                   hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                            >
+                                Hover Me!
+                            </button> */}
+                            <img src={priorityIcon} />
+                        </Tooltip>
+                    </div>
                 </div>
 
             </div>

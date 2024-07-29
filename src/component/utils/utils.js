@@ -1,6 +1,6 @@
 import critical from '../../icons/jira_priority/critical.svg'
 import blocker from '../../icons/jira_priority/blocker.svg'
-import medium from '../../icons/jira_priority/medium.svg'
+import medium from '../../icons/jira_priority/medium.png'
 import low from '../../icons/jira_priority/low.svg'
 import high from '../../icons/jira_priority/high.svg'
 import { Priority } from './app.enum'
@@ -19,7 +19,7 @@ export const messageColor = {
   error: 'danger',
   warning: 'warning'
 }
-export const piorityIcon = (priority) => {
+export const PriorityIcon = (priority) => {
 
   switch (priority) {
     case Priority.HIGH:

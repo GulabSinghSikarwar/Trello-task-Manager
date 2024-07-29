@@ -51,10 +51,14 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
     try {
       const response = await deleteTask(card);
       dispatch(deleteTaskAction(response))
-      toast.success("Deleted A Task !!")
+      toast.success("Deleted A Task !!",{
+        containerId:'TaskCard'
+      })
 
     } catch (error) {
-      toast.error("Something Went Wrong")
+      toast.error("Something Went Wrong",{
+        containerId:'TaskCard'
+      })
     }
   };
 
@@ -73,10 +77,14 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
     if (result) {
 
       if (result.success) {
-        toast.success(" Task Updated  !!", { containerId: 'TaskCard' })
+        toast.success(" Task Updated  !!", 
+          {
+              containerId: 'Dashboard'
+             }
+        )
       }
       if (result.error) {
-        toast.error("Something Went Wrong", { containerId: 'TaskCard' })
+        toast.error("Something Went Wrong", {   containerId: 'Dashboard' })
       }
     }
     setIsOpen(!isOpen);
@@ -174,9 +182,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
               </div>
             </div>
 
-            <ToastContainer containerId={"TaskCard"}
-              position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false}
-              pauseOnFocusLoss draggable pauseOnHover theme="dark" />
+            
           </div>
         )}
       </Draggable>

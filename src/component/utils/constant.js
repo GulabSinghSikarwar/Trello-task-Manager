@@ -22,7 +22,7 @@ export const errorCodes = {
   Unauthorized: 401
 }
 
-
+export const MAP_API_KEY='AIzaSyBD7jSoGD54Ff0fdiqqdLkpQFxL-FdbBuQ'
 
 
  
