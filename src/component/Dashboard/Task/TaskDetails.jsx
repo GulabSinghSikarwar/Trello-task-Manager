@@ -2,13 +2,13 @@ import React from 'react'
 import { useState } from 'react';
 import TaskStatusPanel from './TaskComponents/TaskStatusPanel';
 import CommentBox from './TaskComponents/CommentBox';
+import Editor from '../../Editor/Editor'
+
 function TaskDetails({ isVisible, toggleModal, details }) {
 
     return (
         <div>
             {/* Modal toggle button */}
-
-
             {/* Main modal */}
             {isVisible && (
                 <div
@@ -61,6 +61,9 @@ function TaskDetails({ isVisible, toggleModal, details }) {
                                 </p> */}
                             </div>
                             <CommentBox />
+                            {/* <Editor/> */}
+
+                            
                             {/* Modal footer */}
                             <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                 <button

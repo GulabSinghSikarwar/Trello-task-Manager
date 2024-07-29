@@ -35,3 +35,53 @@ code {
   flex: 1 1 auto; /* Allow buttons to grow and shrink */
   min-width: 100px; /* Minimum width for buttons */
 }
+
+
+/* CustomQuill.css */
+/* Change the editor background and text color */
+.ql-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ql-editor {
+  min-height: 200px;
+  background-color: #fff;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+}
+
+/* Customize toolbar buttons */
+.ql-toolbar .ql-formats button {
+  background: none;
+  border: none;
+  color: #333;
+}
+
+.ql-toolbar .ql-formats button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Customize toolbar dropdowns */
+.ql-toolbar .ql-formats .ql-picker {
+  color: #333;
+}
+
+.ql-toolbar .ql-formats .ql-picker-options {
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+.ql-toolbar .ql-formats .ql-picker-item:hover {
+  background: #eee;
+  color: #000;
+}
+
+/* Customize the overall theme */
+.ql-snow {
+  border: none;
+  background: #fff;
+  border-radius: 4px;
+}

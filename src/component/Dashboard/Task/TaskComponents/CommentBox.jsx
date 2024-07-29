@@ -4,7 +4,7 @@ import { ReactComponent as SendIcon } from '../../../../icons/sendIcon.svg'
 import sendIcon from '../../../../icons/sendIcon.svg'
 
 import EmojiPicker from 'emoji-picker-react';
-
+import Editor from '../../../Editor/Editor';
 
 const CommentBox = () => {
     const [editorValue, setEditorValue] = useState('');
@@ -55,6 +55,7 @@ const CommentBox = () => {
         setStickers([...stickers, emojiObject.target]);
         const sticker = await event.emoji;
         console.log("sticker : ", sticker);
+        console.log("Editor VALUE : ", editorValue);
         setEditorValue(editorValue + ` ${sticker}`);
     };
 
@@ -116,13 +117,15 @@ const CommentBox = () => {
                     </div>
                 </div>
                 <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
-                    <textarea
+                    {/* <textarea
                         className="w-full px-2 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                         rows="8"
                         placeholder="Write an article..."
                         value={editorValue}
                         onChange={handleEditorChange}
-                    ></textarea>
+                    ></textarea> */}
+
+                    <Editor editorValue={editorValue} updateValue={setEditorValue} />
                     {emojiPickerVisible && (
                         <div
                             ref={emojiPickerRef}
@@ -133,7 +136,7 @@ const CommentBox = () => {
                         </div>
                     )}
                     {/* Display location iframe if location is set */}
-                    {location && (
+                    {/* {location && (
                         <div className="mt-4 relative h-full max-h-[calc(100vh-8rem)] overflow-auto">
                             <iframe
                                 width="100%"
@@ -144,7 +147,7 @@ const CommentBox = () => {
                                 src={`https://www.google.com/maps/embed/v1/place?key=${MAP_API_KEY}&q=${location.latitude},${location.longitude}`}
                             ></iframe>
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
             <div className='w-full flex justify-end'>
