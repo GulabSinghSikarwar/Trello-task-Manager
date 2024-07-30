@@ -23,7 +23,8 @@ function TaskStatusPanel({ task }) {
 
         // Setting Avatar Initials
         let user = storageHelper.get('USER')
-
+        console.log("priority  : ", task.priority);
+        console.log("icons : ", priorityIcon);
         if (user.username) {
             const initials = generateInitials(user.username)
             setAvtarInitials(initials)
@@ -75,7 +76,7 @@ function TaskStatusPanel({ task }) {
                     <div className="w-1/2  text-[13px]  text-commentIconColor flex  items-center">
                         <span className='mr-2'> <PriorityFlag /> </span> <span className='capitalize'>Priority</span>
                     </div>
-                    <div className="w-1/2 text-[13px] text-commentIconColor relative inline-block ">
+                    <div className="w-1/2 text-[13px]   relative inline-block ">
                         <Tooltip message={task.priority}>
                             {/* <button
                                 type="button"

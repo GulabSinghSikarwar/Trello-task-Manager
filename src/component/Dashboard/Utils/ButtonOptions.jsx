@@ -32,10 +32,10 @@ function ButtonOptions({ button, options }) {
                 type="button" />
             <div
                 id="dropdownDivider"
-                className={`z-100 ${dropdownOpen ? 'block' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow absolute top-full left-0 w-full`}
-                style={{ minWidth: 200 }}
+                className={`z-1 ${dropdownOpen ? 'block' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow absolute top-full left-0 w-full z- `}
+                style={{ minWidth: 200 ,zIndex:1}}
             >
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
+                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200 z-200" aria-labelledby="dropdownDividerButton">
                     {
                         options.map((option, index) => {
                             return <li>

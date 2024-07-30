@@ -15,6 +15,7 @@ import ButtonOptions from "./Utils/ButtonOptions";
 import TaskDetails from "./Task/TaskDetails";
 import './Task/task.css'
 import { storageHelper } from "../utils/storage";
+import MiniCommentBox from "./Task/TaskComponents/MiniCommentBox";
 
 const Card = ({ card, index, onDeleteCard, onEditCard }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -51,13 +52,13 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
     try {
       const response = await deleteTask(card);
       dispatch(deleteTaskAction(response))
-      toast.success("Deleted A Task !!",{
-        containerId:'TaskCard'
+      toast.success("Deleted A Task !!", {
+        containerId: 'TaskCard'
       })
 
     } catch (error) {
-      toast.error("Something Went Wrong",{
-        containerId:'TaskCard'
+      toast.error("Something Went Wrong", {
+        containerId: 'TaskCard'
       })
     }
   };
@@ -77,14 +78,14 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
     if (result) {
 
       if (result.success) {
-        toast.success(" Task Updated  !!", 
+        toast.success(" Task Updated  !!",
           {
-              containerId: 'Dashboard'
-             }
+            containerId: 'Dashboard'
+          }
         )
       }
       if (result.error) {
-        toast.error("Something Went Wrong", {   containerId: 'Dashboard' })
+        toast.error("Something Went Wrong", { containerId: 'Dashboard' })
       }
     }
     setIsOpen(!isOpen);
@@ -106,7 +107,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
       setAvtarInitials(initials)
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside); 
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -125,7 +126,7 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
         action: toggleTaskDetailsModal
       }
     ]
-    
+
     setTaskActions(actions)
   }, [])
 
@@ -176,13 +177,13 @@ const Card = ({ card, index, onDeleteCard, onEditCard }) => {
                   <span class="initials" id="initials">{avtarInitials}</span>
                 </div>}
                 <div style={{ fontWeight: 'lighter' }} className="flex items-center ">
-                  <span> <img src="" alt="" /> </span> <FaRegCommentDots color="#7E7B85" size={15} fontWeight='300' /> <span className="text-commentIconColor text-[12px] px-1" >   {card.comments.length} </span>
+                <MiniCommentBox card={card}  button={MoreIcon} options={taskAction} /> 
                 </div>
 
               </div>
             </div>
 
-            
+
           </div>
         )}
       </Draggable>
