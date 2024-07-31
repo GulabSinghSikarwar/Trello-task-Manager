@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState } from 'react';
+import TaskStatusPanel from './TaskComponents/TaskStatusPanel';
+import CommentBox from './TaskComponents/CommentBox';
+import Editor from '../../Editor/Editor'
+
 function TaskDetails({ isVisible, toggleModal, details }) {
 
     return (
         <div>
             {/* Modal toggle button */}
-
-
             {/* Main modal */}
             {isVisible && (
                 <div
@@ -15,12 +17,14 @@ function TaskDetails({ isVisible, toggleModal, details }) {
                     aria-hidden="true"
                     className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto overflow-x-hidden"
                 >
+
                     <div className="relative p-4 w-full max-w-2xl max-h-full">
                         {/* Modal content */}
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
                             {/* Modal header */}
                             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                <h3 className="text-xl  text-detailsTitleText   dark:text-white capitalize ">
                                     {details.title}
                                 </h3>
                                 <button
@@ -46,6 +50,7 @@ function TaskDetails({ isVisible, toggleModal, details }) {
                                     <span className="sr-only">Close modal</span>
                                 </button>
                             </div>
+                            <TaskStatusPanel task={details} />
                             {/* Modal body */}
                             <div className="p-4 md:p-5 space-y-4">
                                 <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
@@ -55,6 +60,10 @@ function TaskDetails({ isVisible, toggleModal, details }) {
                                     The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
                                 </p> */}
                             </div>
+                            <CommentBox />
+                            {/* <Editor/> */}
+
+                            
                             {/* Modal footer */}
                             <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                 <button
@@ -62,7 +71,7 @@ function TaskDetails({ isVisible, toggleModal, details }) {
                                     type="button"
                                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                 >
-                                   OK
+                                    OK
                                 </button>
                                 <button
                                     onClick={toggleModal}

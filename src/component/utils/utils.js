@@ -1,9 +1,9 @@
-import critical from '../../icons/jira_priority/critical.svg'
-import blocker from '../../icons/jira_priority/blocker.svg'
-import medium from '../../icons/jira_priority/medium.svg'
-import low from '../../icons/jira_priority/low.svg'
-import high from '../../icons/jira_priority/high.svg'
-import { Priority } from './app.enum'
+import Critical from '../../icons/jira_priority/critical.png'
+import Blocker from '../../icons/jira_priority/blocker.png'
+import Medium from '../../icons/jira_priority/medium.png'
+import Low from '../../icons/jira_priority/low.png'
+import High from '../../icons/jira_priority/high.png'
+import {Priority} from './app.enum'
 export const getRequestParams = (reqBody, method) => {
   return {
     method: method,
@@ -19,16 +19,16 @@ export const messageColor = {
   error: 'danger',
   warning: 'warning'
 }
-export const piorityIcon = (priority) => {
+export const PriorityIcon = (priority) => {
 
   switch (priority) {
     case Priority.HIGH:
-      return high;
+      return High;
     case Priority.LOW:
-      return low;
+      return Low;
     case Priority.CRITICAL:
-      return critical;
+      return Critical;
     case Priority.MEDIUM:
-      return medium
+      return Medium
   }
 }

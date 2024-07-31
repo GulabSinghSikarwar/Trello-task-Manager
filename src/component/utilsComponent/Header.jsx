@@ -32,7 +32,6 @@ function Header() {
             <div className="flex flex-wrap justify-between items-center">
                 <a href="https://flowbite.com" className="flex items-center">
                     <img src={dockerLogo} className="mr-3 h-6 sm:h-9 custom-logo" alt="Flowbite Logo" />
-                    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Trello-X</span>
                 </a>
                 <div className="flex items-center lg:order-2">
                     {isLoggedIn ? (
