@@ -22,6 +22,11 @@ class ApplicationUrls {
     get createTask() {
         return url + '/task'
     }
+
+    fetchComments(taskId) {
+        return url + `/task/${taskId}/comments/`
+    }
+
     allTaskStatus(userId) {
         return url + '/task/' + userId
     }
