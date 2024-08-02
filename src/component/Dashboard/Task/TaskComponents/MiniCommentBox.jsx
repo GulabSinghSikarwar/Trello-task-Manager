@@ -18,6 +18,7 @@ const MiniCommentBox = ({ card, button, options }) => {
     };
 
     useEffect(() => {
+
         document.addEventListener('mousedown', handleOutsideClick);
         return () => {
             document.removeEventListener('mousedown', handleOutsideClick);

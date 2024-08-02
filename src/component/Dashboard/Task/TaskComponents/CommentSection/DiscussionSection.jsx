@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './commentsSection.css'
 import { commentSampleData } from '../../../../utils/constant';
-const DiscussionSection = () => {
-  const [comments] = useState(commentSampleData);
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchComments } from '../../../../../store/thunkStore/comment.thunk'
+const DiscussionSection = ({task}) => {
+  // const [comments] = useState(commentSampleData);
 
-
+  const { comments, status, error } = useSelector((state) => state.comments);
   const [dropdownOpen, setDropdownOpen] = useState(null);
+  const dispatch = useDispatch();
+
 
   const handleDropdownToggle = (id) => {
     setDropdownOpen(dropdownOpen === id ? null : id);
   };
+  useEffect(() => {
+    dispatch(fetchComments(task._id));
+  }, [dispatch, task._id]);
 
   return (
     <section className="bg-white dark:bg-gray-900  py-8 lg:py-3 antialiased overflow-y-auto custom-scrollbar scrollable-content rounded-lg py-0">
@@ -35,7 +42,7 @@ const DiscussionSection = () => {
               <div className="flex items-center">
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                   <img className="mr-2 w-6 h-6 rounded-full" src={comment.profilePicture} alt={comment.author} />
-                  {comment.author}
+                  {comment.username||'Bastard'}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   <time pubdate dateTime={comment.date} title={new Date(comment.date).toLocaleDateString()}>{new Date(comment.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
